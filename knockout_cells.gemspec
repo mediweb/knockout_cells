@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = KnockoutCells::VERSION
   s.authors     = ["Arek Turlewicz"]
   s.email       = ["arek@turlewicz.com"]
-  s.homepage    = "github.com/arekt/knockout_cells"
+  s.homepage    = "http://github.com/arekt/knockout_cells"
   s.summary     = "Usefull cells powered by knockout.js to build your web application faster."
   s.description = "Merging power of rails cells and knockout.js"
 
