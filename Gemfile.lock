@@ -97,6 +97,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cells
   jquery-rails
   knockout_cells!
   sqlite3
