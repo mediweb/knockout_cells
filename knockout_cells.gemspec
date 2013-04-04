@@ -7,11 +7,11 @@ require "knockout_cells/version"
 Gem::Specification.new do |s|
   s.name        = "knockout_cells"
   s.version     = KnockoutCells::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of KnockoutCells."
-  s.description = "TODO: Description of KnockoutCells."
+  s.authors     = ["Arek Turlewicz"]
+  s.email       = ["arek@turlewicz.com"]
+  s.homepage    = "github.com/arekt/knockout_cells"
+  s.summary     = "Usefull cells powered by knockout.js to build your web application faster."
+  s.description = "Merging power of rails cells and knockout.js"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
