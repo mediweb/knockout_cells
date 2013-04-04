@@ -1,0 +1,5 @@
+- label = options[:label]
+- input_bindings = options[:input] || "click: $root.submit"
+.control-group
+  .controls
+    %input{:class=>"btn btn-primary", :name=>"field_name", :type=>"submit", "data-bind" => input_bindings, :value=> label || field_name}

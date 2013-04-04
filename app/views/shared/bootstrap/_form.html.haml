@@ -1,0 +1,3 @@
+%form.ko_form.form-horizontal{:"data-authenticity-token"=>form_authenticity_token, :"data-model"=>model.to_json}
+  %div{"data-bind" => "with: form(#{options.to_json})"}
+    = content
