@@ -1,4 +1,7 @@
 module KnockoutCellsHelper
+  def ko_context(options, &block)
+    render_cell :context, :main, options, capture(&block)
+  end
   class KnockoutForm
     attr_accessor :custom_bindings
     def initialize(view_context, options={})

@@ -1,0 +1,6 @@
+%div.ko_context
+  - @args.each do |k,v|
+    %div.model{:"data-model-name" => "#{k}", :"data-model-value" => v.to_json}
+    %div{"data-bind" => "with: model"}
+      = @inner_html
+
