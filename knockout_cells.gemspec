@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.12"
   s.add_dependency "cells", "3.8.8"
+  s.add_dependency "haml"
 
   s.add_development_dependency "sqlite3"
 end
