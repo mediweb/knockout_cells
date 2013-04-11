@@ -2,6 +2,15 @@ module KnockoutCellsHelper
   def ko_context(options, &block)
     render_cell :context, :main, options, capture(&block)
   end
+
+  def ko_form(options, &block)
+    render_cell :context, :form, options, capture(&block)
+  end
+
+  def ko_input(field_name)
+    render_cell :context, :ko_input, :field_name => field_name
+  end
+
   class KnockoutForm
     attr_accessor :custom_bindings
     def initialize(view_context, options={})
