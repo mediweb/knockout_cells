@@ -13,4 +13,12 @@ class ContextCell < Cell::Rails
     @field_name = options[:field_name]
     render
   end
+  def fields_for(options, inner_html, &block)
+    @model = options[:model]
+    @inner_html = inner_html
+    render
+  end
+  def submit
+    render
+  end
 end

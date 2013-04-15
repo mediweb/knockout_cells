@@ -16,10 +16,14 @@ $ ->
         new Form(model)
 
   class Form
-    constructor : (model)->
-      @token = "TODO"
+    constructor : (model, options={})->
+      @options = options
+      @token = $("form").data("authenticity_token")
       @model = ko.mapping.fromJS(model)
       @submit = (object)=>
+        console.log "Sending:"
+        console.log @options
+        console.log object
         $.ajax
           type: "POST"
           url: @options.url
@@ -42,7 +46,7 @@ $ ->
         return node
 
       @section = (root, model_name, data) ->
-        node = {name: model_name, data : data }
+        node = {name: model_name, data : data, textField: root.textField, section: root.section }
         root[model_name] = node
         return node
 
