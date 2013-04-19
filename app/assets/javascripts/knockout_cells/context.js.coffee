@@ -8,26 +8,25 @@ $ ->
       $(context_tag).find(".model").each (index,model) =>
         name = $(model).data("model-name")
         value = $(model).data("model-value")
-        console.log name
-        console.log value
         @model[name] = ko.mapping.fromJS(value)
 
-      @form_for = (model) ->
-        new Form(model)
+      @form_for = (model,options) ->
+        new Form(model, options)
 
   class Form
     constructor : (model, options={})->
       @options = options
-      @token = $("form").data("authenticity_token")
+      @token = $("form").first().data("authenticity-token")
       @model = ko.mapping.fromJS(model)
+      @model_name = options.model
       @submit = (object)=>
-        console.log "Sending:"
-        console.log @options
-        console.log object
+        data = {}
+        data[@model_name] = ko.mapping.toJS(@model, {ignore: ["__ko_mapping__"]})
+        data.authenticity_token = @token
         $.ajax
           type: "POST"
           url: @options.url
-          data: {person: ko.mapping.toJS(object.data), authenticity_token: @token}
+          data: data
           success: (data) =>
             ko.mapping.fromJS(data, @model);
             return false
@@ -54,5 +53,4 @@ $ ->
 
   $(".ko_context").each (index,c)->
     window.context = new Context(c)
-    console.log "context created"
     ko.applyBindings(context, c);
