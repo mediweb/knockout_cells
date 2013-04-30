@@ -16,8 +16,8 @@ class ContextCell < Cell::Rails
     @field_name = opts[:field_name]
     render
   end
-  def fields_for(options, inner_html, &block)
-    @model = options[:model]
+  def fields_for
+    @model = opts[:model]
     @inner_html = inner_html
     render
   end

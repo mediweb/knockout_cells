@@ -6,13 +6,6 @@ module KnockoutCellsHelper
     render_cell :context, :main, options, capture(&block)
   end
 
-  def ko_form(options, &block)
-    render_cell :context, :form do |c|
-      c.inner_html = capture(&block)
-      c.opts = options
-    end
-  end
-
   def ko_input(opts)
     render_cell :context, :ko_input do |c|
       c.opts = opts
@@ -20,7 +13,10 @@ module KnockoutCellsHelper
   end
 
   def ko_fields_for(options, &block)
-    render_cell :context, :fields_for, options, capture(&block)
+    render_cell :context, :fields_for do |c|
+      c.inner_html = capture(&block)
+      c.opts = options
+    end
   end
 
   def ko_submit
