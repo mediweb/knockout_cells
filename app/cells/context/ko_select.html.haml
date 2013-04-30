@@ -1,0 +1,7 @@
+- collection = opts[:collection] || []
+- field_name = opts[:field_name]
+- input_bindings = "value: v, options: #{collection.inspect}"
+.control-group{"data-bind" => "with: $data.textField($data,'#{field_name}')"}
+  %label.control-label= field_name
+  .controls
+    %select{id: "#{field_name}", "data-bind" => input_bindings }

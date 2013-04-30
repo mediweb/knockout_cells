@@ -24,4 +24,7 @@ class ContextCell < Cell::Rails
   def submit
     render
   end
+  def ko_select
+    render :select
+  end
 end
