@@ -7,24 +7,25 @@ class ContextCell < Cell::Rails
     @inner_html = inner_html
     render
   end
-  def form
+  def form(name)
     @args = opts
+    @model = name
     @inner_html = inner_html
     render
   end
-  def ko_input
-    @field_name = opts[:field_name]
+  def ko_input(name)
+    @field_name = name
     render
   end
-  def fields_for
-    @model = opts[:model]
+  def fields_for(name)
+    @model = name
     @inner_html = inner_html
     render
   end
-  def submit
+  def submit(name)
     render
   end
-  def ko_select
+  def ko_select(name)
     render :select
   end
 end

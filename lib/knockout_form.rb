@@ -17,9 +17,9 @@ class KnockoutForm
     @block = block if block_given?
   end
 
-  def cell(opts={})
+  def cell(name, opts={})
     Rails.logger.debug "------------------------ CELL opts: #{opts}"
-    render_cell @name, @method do |c|
+    render_cell @name, @method, name do |c|
       c.inner_html = inner_html
       c.opts = opts
     end
@@ -28,8 +28,8 @@ class KnockoutForm
   def method_missing(method, *args, &block)
     Rails.logger.debug "------------------------ METHOD MISSING: #{method} #{args}"
     unless block_given?
-      render_cell(@name, method) do |c|
-        c.opts = args[0]
+      render_cell(@name, method, args[0]) do |c|
+        c.opts = args[1]
       end
     else
       self.class.build(@name, method, self, *args, &block)
