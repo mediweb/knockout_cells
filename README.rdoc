@@ -11,7 +11,7 @@ This project rocks and uses MIT-LICENSE.
     //= require knockout_cells
 
 .container
-  = ko_context :person => { :last_name => "Foo", :first_name => "Bar",  hobby => {:name => "slackline"}} do
+  = ko_context :person => { :last_name => "Foo", :first_name => "Bar",  :hobby => {:name => "slackline"}} do
     %p
       Last name:
       %span{"data-bind" => "text: person.last_name"}
