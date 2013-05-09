@@ -1,3 +1,27 @@
 = KnockoutCells
 
 This project rocks and uses MIT-LICENSE.
+
+= Example
+
+  Add to Gemfile
+    gem "knockout_cells", :git => "git@github.com:mediweb/knockout_cells.git", :branch => :develop
+
+  Add to app/assets/javascripts/application.js
+    //= require knockout_cells
+
+.container
+  = ko_context :person => { :last_name => "Foo", :first_name => "Bar",  hobby => {:name => "slackline"}} do
+    %p
+      Last name:
+      %span{"data-bind" => "text: person.last_name"}
+    %p
+      First name:
+      %span{"data-bind" => "text: person.first_name"}
+    %p
+    = form_for :person, :url => "hello" do
+      = ko_input :first_name
+      = ko_input :last_name
+      = fields_for :hobby do
+        = ko_input :name
+      = submit :submit
