@@ -9,6 +9,7 @@ class ContextCell < Cell::Rails
   end
   def form(name)
     @args = opts
+    @args[:model_name] = @args[:model_name] || name
     @model = name
     @inner_html = inner_html
     render
