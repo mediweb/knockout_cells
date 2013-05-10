@@ -19,7 +19,7 @@ This project rocks and uses MIT-LICENSE.
       First name:
       %span{"data-bind" => "text: person.first_name"}
     %p
-    = form_for :person, :url => "hello" do
+    = ko_form_for :person, :url => "hello" do
       = ko_input :first_name
       = ko_input :last_name
       = fields_for :hobby do

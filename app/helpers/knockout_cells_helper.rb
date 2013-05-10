@@ -1,5 +1,5 @@
 module KnockoutCellsHelper
-  def form_for(*args, &block)
+  def ko_form_for(*args, &block)
     KnockoutForm.build(:context, :form, self, *args, &block)
   end
   def ko_context(options, &block)
