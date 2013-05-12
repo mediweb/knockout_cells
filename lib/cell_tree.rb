@@ -1,4 +1,4 @@
-class KnockoutForm
+class CellTree
   attr_accessor :parent, :inner_html
   delegate :capture, :render_cell, :to => :parent
 
@@ -18,7 +18,6 @@ class KnockoutForm
   end
 
   def cell(name, opts={})
-    Rails.logger.debug "------------------------ CELL opts: #{opts}"
     render_cell @name, @method, name do |c|
       c.inner_html = inner_html
       c.opts = opts
@@ -26,7 +25,6 @@ class KnockoutForm
   end
 
   def method_missing(method, *args, &block)
-    Rails.logger.debug "------------------------ METHOD MISSING: #{method} #{args}"
     unless block_given?
       render_cell(@name, method, args[0]) do |c|
         c.opts = args[1]

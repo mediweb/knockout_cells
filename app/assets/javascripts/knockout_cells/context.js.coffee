@@ -17,7 +17,7 @@ $ ->
     constructor : (model, options={})->
       @options = options
       @token = $("form").first().data("authenticity-token")
-      @model = ko.mapping.fromJS(model)
+      @model = model
       @model_name = options.model_name
       @submit = (object)=>
         data = {}
