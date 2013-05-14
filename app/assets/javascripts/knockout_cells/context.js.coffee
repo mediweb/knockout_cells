@@ -9,16 +9,19 @@ $ ->
       $(context_tag).find(".model").each (index,model) =>
         name = $(model).data("model-name")
         value = $(model).data("model-value")
-        @model[name] = ko.observable(ko.mapping.fromJS(value))
+        @model[name] = ko.mapping.fromJS(value)
 
       @form_for = (model,options) ->
         form = new Form(model, options)
-        if options.id?
-          @form[options.id] = form
+        @form[model] = form
         form
 
   class Form
     constructor : (model, options={})->
+      @visible = ko.observable(false)
+      @toogleVisible = =>
+        @visible(!@visible())
+        return @visible()
       @options = options
       @token = $("form").first().data("authenticity-token")
       @model = model
@@ -32,7 +35,8 @@ $ ->
           url: @options.url
           data: data
           success: (data) =>
-            ko.mapping.fromJS(data, @model())
+            ko.mapping.fromJS(data, @model)
+            @visible(false)
             return false
           error: ->
             console.log "error"
@@ -53,7 +57,7 @@ $ ->
         root[model_name] = node
         return node
 
-      @data = @model()
+      @data = @model
 
   $(".ko_context").each (index,c)->
     window.context = new Context(c)
