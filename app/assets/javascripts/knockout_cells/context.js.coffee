@@ -5,13 +5,17 @@ $ ->
   class Context
     constructor : (context_tag)->
       @model=[]
+      @form=[]
       $(context_tag).find(".model").each (index,model) =>
         name = $(model).data("model-name")
         value = $(model).data("model-value")
-        @model[name] = ko.mapping.fromJS(value)
+        @model[name] = ko.observable(ko.mapping.fromJS(value))
 
       @form_for = (model,options) ->
-        new Form(model, options)
+        form = new Form(model, options)
+        if options.id?
+          @form[options.id] = form
+        form
 
   class Form
     constructor : (model, options={})->
@@ -28,7 +32,7 @@ $ ->
           url: @options.url
           data: data
           success: (data) =>
-            ko.mapping.fromJS(data, @model);
+            ko.mapping.fromJS(data, @model())
             return false
           error: ->
             console.log "error"
@@ -37,7 +41,7 @@ $ ->
         data = root.data[model_name]
         errors = ko.observableArray([])
         if root.data.errors
-          for error in root.data.errors()
+          for error in root.data.errors
             for k,v of error
               errors().push v if k == model_name
         node = {v: data, errors: errors, label: model_name, name: model_name }
@@ -49,7 +53,7 @@ $ ->
         root[model_name] = node
         return node
 
-      @data = @model
+      @data = @model()
 
   $(".ko_context").each (index,c)->
     window.context = new Context(c)

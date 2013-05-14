@@ -27,6 +27,8 @@ class ContextCell < Cell::Rails
     render
   end
   def ko_select(name)
+    @field_name = name
+    @collection = opts[:collection] || []
     render :select
   end
 end
