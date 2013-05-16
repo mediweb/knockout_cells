@@ -18,7 +18,7 @@ class ContextCell < Cell::Rails
     @field_name = name
     render
   end
-  def fields_for(name)
+  def ko_fields_for(name)
     @model = name
     @inner_html = inner_html
     render

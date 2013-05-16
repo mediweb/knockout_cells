@@ -52,8 +52,8 @@ $ ->
         root[model_name] = node
         return node
 
-      @section = (root, model_name, data) ->
-        node = {name: model_name, data : data, textField: root.textField, section: root.section }
+      @section = (root, model_name) ->
+        node = {name: model_name, data : root.data[model_name], textField: root.textField, section: root.section }
         root[model_name] = node
         return node
 
