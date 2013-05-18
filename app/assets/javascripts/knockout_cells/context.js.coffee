@@ -28,7 +28,7 @@ $ ->
       @model_name = options.model_name
       @submit = (object)=>
         data = {}
-        data[@model_name] = ko.mapping.toJS(@model, {ignore: ["__ko_mapping__"]})
+        data[@model_name] = ko.mapping.toJS(@model, {ignore: ["__ko_mapping__","errors"]})
         data.authenticity_token = @token
         $.ajax
           type: "POST"
@@ -42,22 +42,31 @@ $ ->
             console.log "error"
 
       @textField = (root, model_name) ->
-        data = root.data[model_name]
+        console.log root.model
+        model = root.model[model_name]
         errors = ko.observableArray([])
-        if root.data.errors
-          for error in root.data.errors
+        if root.model.errors
+          for error in root.model.errors
             for k,v of error
               errors().push v if k == model_name
-        node = {v: data, errors: errors, label: model_name, name: model_name }
+        node = {v: model, errors: errors, label: model_name, name: model_name }
         root[model_name] = node
         return node
 
       @section = (root, model_name) ->
-        node = {name: model_name, data : root.data[model_name], textField: root.textField, section: root.section }
+        root.model[model_name] = ko.observable() unless root.model[model_name]
+        node = {name: model_name, model : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
         root[model_name] = node
         return node
 
-      @data = @model
+      @collection = (root, model_name) ->
+        collection = []
+        root.model[model_name] = ko.observableArray() unless root.model[model_name]
+        for item in root.model[model_name]()
+          node = {name: model_name, model : item, textField: root.textField, section: root.section, collection: root.collection }
+          collection.push node
+        root[model_name] = collection
+        return collection
 
   $(".ko_context").each (index,c)->
     window.context = new Context(c)

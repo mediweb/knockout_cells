@@ -23,6 +23,11 @@ class ContextCell < Cell::Rails
     @inner_html = inner_html
     render
   end
+  def ko_collection(name)
+    @model = name
+    @inner_html = inner_html
+    render
+  end
   def submit(name)
     render
   end

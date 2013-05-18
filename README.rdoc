@@ -11,17 +11,24 @@ This project rocks and uses MIT-LICENSE.
     //= require knockout_cells
 
 .container
-  = ko_context :person => { :last_name => "Foo", :first_name => "Bar",  :hobby => {:name => "slackline"}} do
-    %p
-      Last name:
-      %span{"data-bind" => "text: person.last_name"}
-    %p
-      First name:
-      %span{"data-bind" => "text: person.first_name"}
-    %p
-    = ko_form_for :person, :url => "hello" do
-      = ko_input :first_name
-      = ko_input :last_name
-      = fields_for :hobby do
-        = ko_input :name
-      = submit :submit
+  .row
+    = ko_context :sentences => [{:content => "aa", :lang => "ja", :translations => [{:content=>"aa", :lang=>"en"},{:content=>"bb", :lang=>"pl"}]}] do
+      .span12
+        %a{"data-bind" => "click: function(){sentences.push({content: 'new item', lang: 'ja'})}"} New
+        %div{"data-bind" => "foreach: { data: sentences, as: 'sentence' }"}
+          = ko_form_for :sentence, :url => "api/v1/sentences" do
+            %div
+              %span{"data-bind" => "text: sentence.content"}
+              %a{"data-bind" => "click: toogleVisible"} Edit
+            .edit{"data-bind"=>"visible: visible"}
+              .row
+                .span6
+                  %div.well
+                    = ko_input :content
+                    = ko_select :lang, :collection => ["ja", "pl", "en"]
+                .span6
+                  %div.well
+                    = ko_collection :translations do
+                      = ko_input :content
+                      = ko_select :lang, :collection => ["ja", "pl", "en"]
+                  = submit :submit
