@@ -27,16 +27,16 @@ $ ->
       @token = $("form").first().data("authenticity-token")
       @model = model
       @model_name = options.model_name
-      @deleteObject = =>
+      @deleteObject = (onSuccess)=>
         console.log @model.id()
         data = {}
         data[@model_name] = {id: @model.id()}
         $.ajax
           type: "DELETE"
-          url: @options.url
+          url: "#{@options.url}/#{@model.id()}"
           data: data
           success: (data) =>
-            return false
+            onSuccess
 
       @submit = (object)=>
         data = {}
@@ -56,7 +56,6 @@ $ ->
             console.log "error"
 
       @textField = (root, model_name) ->
-        console.log root.model
         model = root.model[model_name]
         errors = ko.observableArray([])
         if root.model.errors
