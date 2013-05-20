@@ -3,4 +3,4 @@
   .controls
     %input{type: "text", id: "#{@field_name}", "data-bind" => "value: v" }
     .errors{"data-bind" => "foreach: $data.errors"}
-      %p.text-error(data-bind="text: $data")
+      %div.text-error(data-bind="text: $data")

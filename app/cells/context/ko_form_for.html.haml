@@ -1,4 +1,4 @@
 .form-horizontal{:"data-authenticity-token"=>form_authenticity_token}
-  %div{"data-bind" => "with: $root.form_for(#{@model}, #{@args.to_json})"}
+  %div{"data-bind" => "with: $root.form_for(#{@model}, #{@opts.to_json})"}
     = @inner_html
 

@@ -76,7 +76,7 @@ $ ->
         collection = []
         root.model[model_name] = ko.observableArray() unless root.model[model_name]
         for item in root.model[model_name]()
-          node = {name: model_name, model : item, textField: root.textField, section: root.section, collection: root.collection }
+          node = {name: model_name, model : item, container : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
           collection.push node
         root[model_name] = collection
         return collection

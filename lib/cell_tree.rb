@@ -17,18 +17,15 @@ class CellTree
     @block = block if block_given?
   end
 
-  def cell(name, opts={})
-    render_cell @name, @method, name do |c|
+  def cell(*args)
+    render_cell @name, @method, *args do |c|
       c.inner_html = inner_html
-      c.opts = opts
     end
   end
 
   def method_missing(method, *args, &block)
     unless block_given?
-      render_cell(@name, method, args[0]) do |c|
-        c.opts = args[1]
-      end
+      render_cell(@name, method, *args)
     else
       self.class.build(@name, method, self, *args, &block)
     end
