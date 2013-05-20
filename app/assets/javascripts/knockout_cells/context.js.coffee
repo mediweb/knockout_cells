@@ -9,7 +9,8 @@ $ ->
       $(context_tag).find(".model").each (index,model) =>
         name = $(model).data("model-name")
         value = $(model).data("model-value")
-        @model[name] = ko.mapping.fromJS(value)
+        @model[name] = ko.mapping.fromJS value, key: (item) ->
+          return ko.utils.unwrapObservable(item.id);
 
       @form_for = (model,options) ->
         form = new Form(model, options)
@@ -26,9 +27,22 @@ $ ->
       @token = $("form").first().data("authenticity-token")
       @model = model
       @model_name = options.model_name
+      @deleteObject = =>
+        console.log @model.id()
+        data = {}
+        data[@model_name] = {id: @model.id()}
+        $.ajax
+          type: "DELETE"
+          url: @options.url
+          data: data
+          success: (data) =>
+            return false
+
       @submit = (object)=>
         data = {}
-        data[@model_name] = ko.mapping.toJS(@model, {ignore: ["__ko_mapping__","errors"]})
+        data[@model_name] = ko.mapping.toJSON(@model, {ignore: ["__ko_mapping__","errors"]})
+        console.log "Sending"
+        console.log data[@model_name]
         data.authenticity_token = @token
         $.ajax
           type: "POST"
