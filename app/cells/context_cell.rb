@@ -9,8 +9,8 @@ class ContextCell < Cell::Rails
   end
   def ko_form_for(name, opts={})
     @opts = opts
-    @opts[:model_name] = @opts[:model_name] || name
-    @model = name
+    @opts[:model_name] = name
+    @model = "model"
     @inner_html = inner_html
     render
   end

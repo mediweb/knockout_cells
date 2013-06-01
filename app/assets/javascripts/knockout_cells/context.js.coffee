@@ -13,12 +13,25 @@ $ ->
           return ko.utils.unwrapObservable(item.id);
 
       @form_for = (model,options) ->
-        form = new Form(model, options)
+        form = new Form(model, options, @)
         @form[model] = form
         form
+      @collection = (root, model_name) ->
+        collection = []
+        root.model[model_name] = ko.observableArray() unless root.model[model_name]
+        for item in root.model[model_name]()
+          node = {name: model_name, model : item, container : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
+          collection.push node
+        root[model_name] = collection
+        return collection
+      @section = (root, model_name) ->
+        root.model[model_name] = ko.observable() unless root.model[model_name]
+        node = {name: model_name, model : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
+        root[model_name] = node
+        return node
 
   class Form
-    constructor : (model, options={})->
+    constructor : (model, options, parent)->
       @visible = ko.observable(false)
       @toogleVisible = =>
         @visible(!@visible())
@@ -26,6 +39,7 @@ $ ->
       @options = options
       @token = $("form").first().data("authenticity-token")
       @model = model
+      @parent = parent
       @model_name = options.model_name
       @deleteObject = (onSuccess)=>
         console.log @model.id()
@@ -66,20 +80,9 @@ $ ->
         root[model_name] = node
         return node
 
-      @section = (root, model_name) ->
-        root.model[model_name] = ko.observable() unless root.model[model_name]
-        node = {name: model_name, model : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
-        root[model_name] = node
-        return node
+      @section = parent.section
 
-      @collection = (root, model_name) ->
-        collection = []
-        root.model[model_name] = ko.observableArray() unless root.model[model_name]
-        for item in root.model[model_name]()
-          node = {name: model_name, model : item, container : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
-          collection.push node
-        root[model_name] = collection
-        return collection
+      @collection = parent.collection
 
   $(".ko_context").each (index,c)->
     window.context = new Context(c)
