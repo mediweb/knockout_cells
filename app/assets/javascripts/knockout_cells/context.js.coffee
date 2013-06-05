@@ -12,15 +12,15 @@ $ ->
         @model[name] = ko.mapping.fromJS value, key: (item) ->
           return ko.utils.unwrapObservable(item.id);
 
-      @form_for = (model,options) ->
-        form = new Form(model, options, @)
+      @form_for = (model,options,parent) ->
+        form = new Form(model, options, parent)
         @form[model] = form
         form
       @collection = (root, model_name) ->
         collection = []
         root.model[model_name] = ko.observableArray() unless root.model[model_name]
         for item in root.model[model_name]()
-          node = {name: model_name, model : item, container : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection }
+          node = {name: model_name, model : item, container : root.model[model_name], textField: root.textField, section: root.section, collection: root.collection, deleteObject: ->; }
           collection.push node
         root[model_name] = collection
         return collection
@@ -39,18 +39,19 @@ $ ->
       @options = options
       @token = $("form").first().data("authenticity-token")
       @model = model
-      @parent = parent
+      @parent = parent.model
       @model_name = options.model_name
+      @container = parent.container
       @deleteObject = (onSuccess)=>
-        console.log @model.id()
-        data = {}
-        data[@model_name] = {id: @model.id()}
-        $.ajax
-          type: "DELETE"
-          url: "#{@options.url}/#{@model.id()}"
-          data: data
-          success: (data) =>
-            onSuccess
+        if @model.id
+          data = {}
+          data[@model_name] = {id: @model.id()}
+          $.ajax
+            type: "DELETE"
+            url: "#{@options.url}/#{@model.id()}"
+            data: data
+            success: (data) =>
+              onSuccess
 
       @submit = (object)=>
         data = {}
