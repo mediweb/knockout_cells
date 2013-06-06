@@ -38,5 +38,5 @@ $ ->
         {data: @model }
 
   $("form.ko_form").each (index,form)->
-    window.fb = new FormBuilder(form)
+    fb = new FormBuilder(form)
     ko.applyBindings(fb, form);

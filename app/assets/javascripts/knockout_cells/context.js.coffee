@@ -37,7 +37,7 @@ $ ->
         @visible(!@visible())
         return @visible()
       @options = options
-      @token = $("form").first().data("authenticity-token")
+      @token = $(".ko_form").first().data("authenticity-token")
       @model = model
       @parent = parent.model
       @model_name = options.model_name
@@ -56,12 +56,13 @@ $ ->
       @submit = (object)=>
         data = {}
         data[@model_name] = ko.mapping.toJSON(@model, {ignore: ["__ko_mapping__","errors"]})
-        console.log "Sending"
-        console.log data[@model_name]
+        data["id"] = @model.id() if @model.id
         data.authenticity_token = @token
+        requestType = if @model.id then "PUT" else "POST"
+        url = if @model.id then @options.url + "/#{@model.id()}" else @options.url
         $.ajax
-          type: "POST"
-          url: @options.url
+          type: requestType
+          url: url
           data: data
           success: (data) =>
             ko.mapping.fromJS(data, @model)
